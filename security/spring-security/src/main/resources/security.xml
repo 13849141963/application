@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!--security 过滤器链配置项-->
+    <security:http>
+
+        <!--<security:intercept-url 表示拦截的路径
+            access="permitAll()" 表示不需要认证就可以访问该资源
+            access="isFullyAuthenticated()" 表示所有资源都需要认证
+            access="isAnonymous()" 表示只有匿名用户才可以访问(如果是登录用户就无法访问)
+        -->
+        <security:intercept-url pattern="/product/add" access="hasAuthority('ROLE_ADD_PRODUCT')"/>
+        <security:intercept-url pattern="/product/update" access="hasAuthority('ROLE_UPDATE_PRODUCT')"/>
+        <security:intercept-url pattern="/product/list" access="hasAuthority('ROLE_LIST_PRODUCT')"/>
+        <security:intercept-url pattern="/product/delete" access="hasAuthority('ROLE_DELETE_PRODUCT')"/>
+
+
+        <security:intercept-url pattern="/userLogin" access="permitAll()"/>
+        <security:intercept-url pattern="/imageCode" access="permitAll()"/>
+        <security:intercept-url pattern="/product/index" access="permitAll()"/>
+        <security:intercept-url pattern="/com/zy" access="isFullyAuthenticated()"/>
+
+
+        <!--指定图片验证码过滤器在用户名密码过滤器之前进行执行-->
+        <security:custom-filter ref="imageCodeAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
+
+
+        <!--       login-page="/login" 登陆页面的路径
+                   authentication-success-forward-url="/product/index" 登陆成功跳转的路径
+                   authentication-success-handler-ref="securityAuthenticationSuccessHandler" 登陆成功跳转的路径
+                   authentication-failure-handler-ref="securityAuthenticationFailureHandler" 登陆失败跳转的路径-->
+
+        <security:form-login login-page="/userLogin"
+                             authentication-failure-forward-url="/login?error=true"
+                             authentication-success-handler-ref="securityAuthenticationSuccessHandler"
+                             authentication-failure-handler-ref="securityAuthenticationFailureHandler"
+        />
+
+        <!--指定没有权限跳转的路径-->
+        <security:access-denied-handler error-page="/error"/>
+
+        <!--关闭第三方跨站请求伪造-->
+        <security:csrf disabled="true"/>
+
+
+        <security:remember-me token-repository-ref="jdbcTokenRepository" token-validity-seconds="3600"/>
+
+    </security:http>
+
+    <!--认证管理器-->
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="myUserDetail">
+            <!--注入密码加密器-->
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+            <!--<security:user-service>-->
+                <!--<security:user name="zs" password="123" authorities="ROLE_USER"/>-->
+                <!--<security:user name="ls" password="123" authorities="ROLE_ADMIN"/>-->
+            <!--</security:user-service>-->
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+    <bean id="myUserDetail" class="com.zy.cn.security.MyUserDetail"/>
+
+    <!--自定义登陆成功处理器 一般返回前端json-->
+    <bean id="securityAuthenticationSuccessHandler" class="com.zy.cn.security.SecurityAuthenticationSuccessHandler"/>
+    <!--自定义登陆失败处理器 一般返回前端json-->
+    <bean id="securityAuthenticationFailureHandler" class="com.zy.cn.security.SecurityAuthenticationFailureHandler"/>
+    <!--密码加密器-->
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <!--图片验证码过滤器-->
+    <bean id="imageCodeAuthenticationFilter" class="com.zy.cn.security.ImageCodeAuthenticationFilter">
+        <property name="securityAuthenticationFailureHandler" ref="securityAuthenticationFailureHandler"/>
+    </bean>
+
+    <!--记住我需要的jdbc 数据源 在数据库中创建表 记录cookie-->
+    <bean id="jdbcTokenRepository" class="org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl">
+        <property name="dataSource" ref="dataSource"/>
+        <!--启动创建表 之创建一次即可 第二次启动需要注释掉-->
+        <!--<property name="createTableOnStartup" value="true"/>-->
+    </bean>
+
+</beans>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" >
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Purple Admin</title>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <h3 class="page-title">
+              <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                <i class="mdi mdi-home"></i>                 
+              </span>
+              欢迎来到医院在线集成系统
+            </h3>
+            <h3>当前登录用户：<span th:text="${#authentication.name}"></span> |</h3>
+            <form th:action="@{/logout}" method="post">
+              <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+              <input type="submit" value="logout">
+            </form>
+          </div>
+          <div class="row">
+            <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
+                    <h2 class="mb-5"><a href="http://localhost:9001/" style="color: white">cr-a门户系统</a></h2>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-info card-img-holder text-white">
+                <div class="card-body">
+                  <img src="images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image"/>
+                  <h2 class="mb-5"><a href="http://localhost:9002/" style="color: white">cr-b门户系统</a></h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+
+</body>
+
+</html>

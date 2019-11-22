@@ -1,0 +1,152 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50720
+ Source Host           : localhost:3306
+ Source Schema         : security
+
+ Target Server Type    : MySQL
+ Target Server Version : 50720
+ File Encoding         : 65001
+
+ Date: 25/10/2019 16:48:33
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for persistent_logins
+-- ----------------------------
+DROP TABLE IF EXISTS `persistent_logins`;
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of persistent_logins
+-- ----------------------------
+BEGIN;
+INSERT INTO `persistent_logins` VALUES ('ls', 'Dn+zI8jBY9q2XDYlXgHoeQ==', 'Hf0jtosg5zwuc2TV2R4Tig==', '2019-10-25 03:04:54');
+INSERT INTO `persistent_logins` VALUES ('zs', 'XjHsS+RyQjR1GCOT5wzS/A==', 'JMU01bkFyB2kLegsiChmGQ==', '2019-10-25 02:47:22');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_permission`;
+CREATE TABLE `sys_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permName` varchar(50) DEFAULT NULL,
+  `permTag` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_permission
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_permission` VALUES (1, '产品查询', 'ROLE_LIST_PRODUCT');
+INSERT INTO `sys_permission` VALUES (2, '产品添加', 'ROLE_ADD_PRODUCT');
+INSERT INTO `sys_permission` VALUES (3, '产品修改', 'ROLE_UPDATE_PRODUCT');
+INSERT INTO `sys_permission` VALUES (4, '产品删除', 'ROLE_DELETE_PRODUCT');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roleName` varchar(50) DEFAULT NULL,
+  `roleDesc` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role` VALUES (1, '普通用户', '普通用户');
+INSERT INTO `sys_role` VALUES (2, '管理员', '管理员');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_role_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_permission`;
+CREATE TABLE `sys_role_permission` (
+  `role_id` int(11) DEFAULT NULL,
+  `perm_id` int(11) DEFAULT NULL,
+  KEY `role_perm_id` (`role_id`),
+  KEY `perm_id` (`perm_id`),
+  CONSTRAINT `perm_id` FOREIGN KEY (`perm_id`) REFERENCES `sys_permission` (`id`),
+  CONSTRAINT `role_perm_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+
+-- ----------------------------
+-- Records of sys_role_permission
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_role_permission` VALUES (1, 1);
+INSERT INTO `sys_role_permission` VALUES (1, 2);
+INSERT INTO `sys_role_permission` VALUES (2, 3);
+INSERT INTO `sys_role_permission` VALUES (2, 4);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_user
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) DEFAULT NULL,
+  `realname` varchar(50) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `createDate` date DEFAULT NULL,
+  `lastLoginTime` date DEFAULT NULL,
+  `enabled` int(11) DEFAULT NULL,
+  `accountNonExpired` int(11) DEFAULT NULL,
+  `accountNonLocked` int(11) DEFAULT NULL,
+  `credentialsNonExpired` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户表';
+
+-- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_user` VALUES (1, 'zs', '张三', '$2a$10$97W6rfb7N9cyv/.dk6.U0eHdPgqTB8uOWWuxEQAdxggR6.QVmps3y', '2019-10-25', '2019-10-25', 1, 1, 1, 1);
+INSERT INTO `sys_user` VALUES (2, 'ls', '李四', '$2a$10$.y0/ou8DWwhSrJ8fb9bcPOtENo96a7o5RoT6meWyr4hH091Nur7Zi', '2019-10-25', '2019-10-25', 1, 1, 1, 1);
+INSERT INTO `sys_user` VALUES (3, '1', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (4, '2', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role` (
+  `user_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  KEY `user_id` (`user_id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_user_role` VALUES (1, 1);
+INSERT INTO `sys_user_role` VALUES (2, 2);
+COMMIT;
+
+SET FOREIGN_KEY_CHECKS = 1;

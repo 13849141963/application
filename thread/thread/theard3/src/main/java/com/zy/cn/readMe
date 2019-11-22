@@ -1,0 +1,12 @@
+1.该项目是springboot的quertz和调度线程组合执行的任务,用户在页面指定需要固定的时间去执行任务,我们会把这些任务
+  存入表中，记录需要执行的具体时间,子类就是需要执行任务的类去实现implements Loader<TaskModel>,
+  CancelDispatch<TaskModel> 类并重写方法 TaskModel为具体的任务类,具体方法需要根据业务场景考虑，
+  在需要执行的业务类中构造创建调度线程池,周期执行时间 Quertz的调度器
+  public UserTaskManager(){
+          taskMa = new AsynTaskManager<>(this,this,10 * 60);
+          calScheduler = new CalendarIntervalQuartz<>();
+  }
+  通过AsynTaskDispatch去加载任务并放入队列,因为这是定时任务,所以创建类两个队列，一个是msgQueue这个只是用来
+  存放数据库中查询需要执行的任务,另外一个队列就是吧已经装配好的定时任务放入该队列中,因为定时任务都是在未来执行的
+  将组装好的定时任务放入该队列的同时在将原来的消息队列的任务移除,用户取消任务也会取消相应的任务,就是移除存放定时
+  任务的那个队列.

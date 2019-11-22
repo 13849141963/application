@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-client2
+server:
+  port: 8083
+  servlet:
+    session:
+      cookie:               #如果不修改客户端的JESSIONID的key就会出现登陆失败 认证服务器不会让你认证通过：已经通过测试认证
+        name: OAUTH2SESSION #本地测试访问时路径中没有content-path需要指定session-cookie-name要不然登陆不进去 资源服务器也会有一个JESSIONID
+security:
+  oauth2:
+    client:
+      client-id: client2
+      client-secret: 123456
+      user-authorization-uri: http://localhost:8080/oauth/authorize #认证服务器地址 进行认证
+      access-token-uri: http://localhost:8080/oauth/token #认证服务器地址 获取令牌地址
+    resource:
+      user-info-uri: http://localhost:8081/contents/ #资源服务器地址
+      token-info-uri: http://localhost:8080/oauth/check_token #校验token令牌的有效性
+  basic:
+    enabled: false #禁用默认的基本身份验证

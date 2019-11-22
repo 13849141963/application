@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+    <h1>测试csv base64解码导出</h1>
+    <button onclick="exportCsv()">下载csv文件</button>
+    <script>
+
+        function exportCsv() {
+            $.ajax(
+                {
+                    url:'/exportCsv',
+                    method:'get',
+                    success: function(data){
+                        console.log("1:"+data)
+                        var a = document.createElement('a');
+                        a.setAttribute('href', 'data:text/csv;base64,'+data.csvBase64String);
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('id', 'startTelMedicine');
+                        a.setAttribute('download', data.csvFileName);
+                        // 防止反复添加
+                        if(document.getElementById('startTelMedicine')) {
+                            document.body.removeChild(document.getElementById('startTelMedicine'));
+                        }
+                        document.body.appendChild(a);
+                        a.click();
+                    },
+                    error:function(err){
+                        alert(err);
+                    }
+                });
+        }
+
+    </script>
+</body>
+</html>

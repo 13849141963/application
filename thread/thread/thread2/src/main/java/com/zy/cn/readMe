@@ -1,0 +1,18 @@
+1.该项目中创建线程池,周期性任务，适合执行周期性任务的方案，线程池支持返回结果的线程,支持无返回结果的线程
+2.核心类 LoopAsynTaskManager LoopAsynTaskmanagerBase
+3.自定义具体任务类实现LoopAsynTaskmanagerBase类重写load()方法,该方法就是在LoopAsynTaskManager中进行加载全部子类的任务通过指定的周期时间去
+  执行任务,无返回结果,canDispatch(),方法决定是否取消任务,runTask()方法就是任务类需要执行的最终任务
+4.通过任务类进行构造创建
+    @Autowired //loopTime为需要执行执行的周期时间 简单来说就是多长时间执行一次任务
+    public UserTaskManager(ThreadPoolManager threadPoolManager) {
+        super(loopTime, threadPoolManager);
+    }
+5.最终都是通过LoopAsynTaskmanagerBase类中的dispatch()方法通过传递的任务构造任务交给线程池去执行,TaskJob类就是执行子类中的具体任务
+    @Override
+    public boolean dispatch(T e){
+        // 构造任务
+        TaskJob job = new TaskJob(e);
+        // 交给线程池执行
+        threadPoolManager.execute(job);
+        return true;
+    }

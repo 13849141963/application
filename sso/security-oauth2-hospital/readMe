@@ -1,0 +1,7 @@
+典型的单点登录系统：医院集成系统
+cr-sso是认证是授权中心
+cr-his是资源中心
+cr-oa是资源中心
+cr-portal-a是客户端
+cr-portal-b是客户端
+
