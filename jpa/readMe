@@ -1,0 +1,26 @@
+1.用户和联系人为一对多
+    对象导航查询 ：默认一方查多方延迟加载
+                    多方查一方立即加载
+    级联 属性 用户设置 cascade = CascadeType.ALL属性 保存用户的时候可以保存联系人
+    级联 属性 联系人设置 cascade = CascadeType.ALL属性 保存联系人的时候可以保存用户
+2.学生和角色为多对多
+    与上面雷同，多对多的区别在于多建立一张中间关联表，最后保存关联关系的时候会保存到关系表中
+3.测试案例
+  查询一对多 查询多对一 查询一对一
+spring-jpa 2.0版本一下
+springboot-jpa2.0版本以上 有一些继承的方法区别
+spring-data-jpa原理：https://blog.csdn.net/weixin_40470497/article/details/103546674
+
+
+JPA
+
+JPA(Java Persistence API)意即Java持久化API，是Sun官方在JDK5.0后提出的Java持久化规范（JSR 338，这些接口所在包为javax.persistence，详细内容可参考https://github.com/javaee/jpa-spec）
+JPA的出现主要是为了简化持久层开发以及整合ORM技术，结束Hibernate、TopLink、JDO等ORM框架各自为营的局面。JPA是在吸收现有ORM框架的基础上发展而来，易于使用，伸缩性强。总的来说，JPA包括以下3方面的技术：
+
+ORM映射元数据： 支持XML和注解两种元数据的形式，元数据描述对象和表之间的映射关系
+API： 操作实体对象来执行CRUD操作
+查询语言： 通过面向对象而非面向数据库的查询语言（JPQL）查询数据，避免程序的SQL语句紧密耦合
+
+
+总的来说JPA是ORM规范，Hibernate、TopLink等是JPA规范的具体实现，这样的好处是开发者可以面向JPA规范进行持久层的开发，
+而底层的实现则是可以切换的。Spring Data Jpa则是在JPA之上添加另一层抽象（Repository层的实现），极大地简化持久层开发及ORM框架切换的成本。

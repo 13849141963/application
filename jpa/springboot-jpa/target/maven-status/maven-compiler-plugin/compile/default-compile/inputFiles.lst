@@ -1,0 +1,14 @@
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepositoryJPQL.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/LinkManRepository.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/SpringbootJpaApplication.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepositoryNamed.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepository.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/entity/LinkMan.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/entity/Student.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/StudentRepository.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepositoryOneToMany.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepositorySQL.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/RoleRepository.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/entity/Role.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/dao/UserRepositorySpecification.java
+/Users/apple/Documents/application/jpa/springboot-jpa/src/main/java/com/zy/cn/entity/User.java

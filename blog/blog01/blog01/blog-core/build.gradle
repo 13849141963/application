@@ -1,0 +1,7 @@
+/* 子模块项目名，jar名 */
+archivesBaseName = 'blog-core'
+
+dependencies {
+    // spring-data-jpa 数据库操作 持久层
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+}

@@ -1,0 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url "http://maven.aliyun.com/repository/gradle-plugin" }
+    }
+}
+/* 多模块构建 */
+/* 父模块名称 */
+rootProject.name = 'blog01'
+/* 引入子模块 */
+include 'blog-admin','blog-core','blog-web'

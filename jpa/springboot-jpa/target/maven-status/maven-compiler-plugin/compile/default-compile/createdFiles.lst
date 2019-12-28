@@ -1,0 +1,14 @@
+com/zy/cn/dao/UserRepository.class
+com/zy/cn/entity/Student.class
+com/zy/cn/dao/RoleRepository.class
+com/zy/cn/entity/LinkMan.class
+com/zy/cn/entity/User.class
+com/zy/cn/SpringbootJpaApplication.class
+com/zy/cn/dao/UserRepositoryJPQL.class
+com/zy/cn/dao/StudentRepository.class
+com/zy/cn/entity/Role.class
+com/zy/cn/dao/UserRepositorySpecification.class
+com/zy/cn/dao/UserRepositoryNamed.class
+com/zy/cn/dao/LinkManRepository.class
+com/zy/cn/dao/UserRepositorySQL.class
+com/zy/cn/dao/UserRepositoryOneToMany.class

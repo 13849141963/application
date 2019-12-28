@@ -1,0 +1,6 @@
+/* 子模块项目名，jar名 */
+archivesBaseName = 'blog-admin'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
